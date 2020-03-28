@@ -2,10 +2,9 @@ import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 
-
 const StripeCheckoutButton = ({ price }) => {
   const priceForStripe = price * 100;
-  const publishableKey = 'pk_test_Pj8mr0IeYSBcucji36oI7g0Z00pIc2ywYK';
+  const publishableKey = 'pk_test_b7a3hFL5nC3qlBCZ6bQACpez00gyMMP52H';
 
   const onToken = token => {
     axios({
@@ -13,18 +12,22 @@ const StripeCheckoutButton = ({ price }) => {
       method: 'post',
       data: {
         amount: priceForStripe,
-        token
+        token: token
       }
-    }).then(response => {
-      alert('Payment Successful');
-    }).catch(error => {
-      console.log('Payment error: ', JSON.parse(error));
-      alert('There was an issue with your payment')
     })
-  }
+      .then(response => {
+        alert('succesful payment');
+      })
+      .catch(error => {
+        console.log('Payment Error: ', JSON.parse(error));
+        alert(
+          'There was an issue with your payment! Please make sure you use the provided credit card.'
+        );
+      });
+  };
 
   return (
-    <StripeCheckout 
+    <StripeCheckout
       label='Pay Now'
       name='CRWN Clothing Ltd.'
       billingAddress
